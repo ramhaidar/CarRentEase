@@ -35,7 +35,9 @@ class PeminjamanController extends Controller
             'tanggal_mulai'   => 'required|date|after_or_equal:today',
             'tanggal_selesai' => 'required|date|after:tanggal_mulai'
         ] );
+
         $mobil = Mobil::findOrFail ( $request->mobil_id );
+
         if ( $mobil->tersedia )
         {
             Peminjaman::create ( [ 
@@ -45,9 +47,12 @@ class PeminjamanController extends Controller
                 'tanggal_selesai'     => $request->tanggal_selesai,
                 'status_pengembalian' => false
             ] );
+
             $mobil->update ( [ 'tersedia' => false ] );
+
             return redirect ()->route ( 'peminjaman.index' )->with ( 'success', 'Mobil berhasil dipesan' );
         }
+
         return redirect ()->back ()->with ( 'error', 'Mobil tidak tersedia untuk disewa' );
     }
 }

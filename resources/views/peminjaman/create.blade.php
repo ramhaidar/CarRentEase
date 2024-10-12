@@ -48,8 +48,19 @@
                 <div class="mt-2">
                     <p class="text-sm text-gray-500 dark:text-gray-300">{{ __('Masukkan Tanggal Mulai dan Tanggal Selesai') }}</p>
                     <form id="peminjaman-form" method="POST" action="{{ route('peminjaman.store') }}">@csrf<input id="mobil_id" name="mobil_id" type="hidden">
-                        <div class="mt-4"><label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="tanggal_mulai">{{ __('Tanggal Mulai') }}</label><input class="block mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:text-gray-300" id="tanggal_mulai" name="tanggal_mulai" type="date"></div>
-                        <div class="mt-4"><label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="tanggal_selesai">{{ __('Tanggal Selesai') }}</label><input class="block mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:text-gray-300" id="tanggal_selesai" name="tanggal_selesai" type="date"></div>
+                        <div class="mt-4">
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="tanggal_mulai">
+                                {{ __('Tanggal Mulai') }}
+                            </label>
+                            <input class="block mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:text-gray-300" id="tanggal_mulai" name="tanggal_mulai" type="text" placeholder="Pilih tanggal mulai">
+                        </div>
+
+                        <div class="mt-4">
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="tanggal_selesai">
+                                {{ __('Tanggal Selesai') }}
+                            </label>
+                            <input class="block mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:text-gray-300" id="tanggal_selesai" name="tanggal_selesai" type="text" placeholder="Pilih tanggal selesai">
+                        </div>
                         <div class="mt-5 sm:mt-6 sm:flex sm:flex-row-reverse"><button class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-blue-600 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm" type="submit">{{ __('Pesan') }}</button><button class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" id="close-modal" type="button">{{ __('Batal') }}</button></div>
                     </form>
                 </div>
@@ -62,13 +73,29 @@
                 var mobilId = $(this).data('id');
                 var mobilMerek = $(this).data('merek');
                 var mobilModel = $(this).data('model');
-                $('#modal-title').text('Pesan Mobil: ' + mobilMerek + ' ' + mobilModel);
+                $('#modal-title').text('Pesan Mobil: ' + mobilMerek + ' - ' + mobilModel);
                 $('#mobil_id').val(mobilId);
                 $('#modal').removeClass('hidden');
             });
             $('#close-modal').click(function() {
                 $('#modal').addClass('hidden');
             });
+        });
+
+        flatpickr("#tanggal_mulai", {
+            enableTime: false,
+            dateFormat: "Y-m-d",
+            minDate: "today",
+            onChange: function(selectedDates, dateStr, instance) {
+                let tanggalSelesaiInput = document.getElementById("tanggal_selesai")._flatpickr;
+                tanggalSelesaiInput.set("minDate", dateStr);
+            }
+        });
+
+        flatpickr("#tanggal_selesai", {
+            enableTime: false,
+            dateFormat: "Y-m-d",
+            minDate: new Date(),
         });
     </script>
 </x-app-layout>
