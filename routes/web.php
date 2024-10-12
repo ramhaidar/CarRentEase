@@ -66,4 +66,9 @@ Route::put ( '/manajemen/{id}', [ ManajemenController::class, 'update' ] )->name
 Route::delete ( '/manajemen/{id}', [ ManajemenController::class, 'destroy' ] )->name ( 'manajemen.destroy' );
 Route::get ( '/manajemen/{id}', [ ManajemenController::class, 'show' ] )->name ( 'manajemen.show' );
 
+Route::get ( '/peminjaman', [ PeminjamanController::class, 'index' ] )->name ( 'peminjaman.index' );
+Route::get ( '/peminjaman/create', [ PeminjamanController::class, 'create' ] )->name ( 'peminjaman.create' );
+Route::post ( '/peminjaman', [ PeminjamanController::class, 'store' ] )->name ( 'peminjaman.store' );
+
+
 require __DIR__ . '/auth.php';
