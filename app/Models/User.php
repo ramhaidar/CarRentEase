@@ -17,10 +17,14 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
+    protected $fillable = [ 
         'name',
+        'username',
         'email',
         'password',
+        'alamat',
+        'nomor_telepon',
+        'nomor_sim',
     ];
 
     /**
@@ -28,7 +32,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $hidden = [
+    protected $hidden = [ 
         'password',
         'remember_token',
     ];
@@ -38,11 +42,16 @@ class User extends Authenticatable
      *
      * @return array<string, string>
      */
-    protected function casts(): array
+    protected function casts () : array
     {
-        return [
+        return [ 
             'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            'password'          => 'hashed',
         ];
+    }
+
+    public function peminjamans ()
+    {
+        return $this->hasMany ( Peminjaman::class);
     }
 }
