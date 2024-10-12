@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string ( 'alamat' );
             $table->string ( 'nomor_telepon' );
             $table->string ( 'nomor_sim' )->unique ();
+            $table->string ( 'role' )->default ( 'user' );
+            $table->string ( 'remember_token', 100 )->nullable ();
             $table->timestamps ();
         } );
 
