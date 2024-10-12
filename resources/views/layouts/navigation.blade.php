@@ -17,7 +17,7 @@
                     </x-nav-link>
 
                     <!-- Manajemen Mobil Menu -->
-                    <x-nav-link :href="route('mobils.index')" :active="request()->routeIs('mobils.*')">
+                    <x-nav-link :href="route('manajemen.index')" :active="request()->routeIs('manajemen.*')">
                         {{ __('Manajemen Mobil') }}
                     </x-nav-link>
 
@@ -86,7 +86,7 @@
             </x-responsive-nav-link>
 
             <!-- Manajemen Mobil Menu (Responsive) -->
-            <x-responsive-nav-link :href="route('mobils.index')" :active="request()->routeIs('mobils.*')">
+            <x-responsive-nav-link :href="route('manajemen.index')" :active="request()->routeIs('manajemen.*')">
                 {{ __('Manajemen Mobil') }}
             </x-responsive-nav-link>
 
