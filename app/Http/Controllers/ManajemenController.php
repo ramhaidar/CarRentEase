@@ -87,7 +87,8 @@ class ManajemenController extends Controller
         $mobil = Mobil::findOrFail ( $id );
         $mobil->delete ();
 
-        return redirect ()->route ( 'manajemen.index' )->with ( 'success', 'Mobil berhasil dihapus' );
+        // return redirect ()->route ( 'manajemen.index' )->with ( 'success', 'Mobil berhasil dihapus' );
+        return redirect ()->route ( 'manajemen.index' )->with ( 'deleted', 'Mobil berhasil dihapus' );
     }
 
     public function show ( $id )
