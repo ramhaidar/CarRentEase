@@ -18,6 +18,10 @@ class Pengembalian extends Model
         'total_biaya',
     ];
 
+    protected $casts = [ 
+        'tanggal_pengembalian' => 'date',
+    ];
+
     public function peminjaman ()
     {
         return $this->belongsTo ( Peminjaman::class);

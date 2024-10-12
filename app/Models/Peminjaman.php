@@ -18,6 +18,11 @@ class Peminjaman extends Model
         'status_pengembalian',
     ];
 
+    protected $casts = [ 
+        'tanggal_mulai'   => 'date',
+        'tanggal_selesai' => 'date',
+    ];
+
     public function user ()
     {
         return $this->belongsTo ( User::class);

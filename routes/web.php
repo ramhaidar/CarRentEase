@@ -70,5 +70,7 @@ Route::get ( '/peminjaman', [ PeminjamanController::class, 'index' ] )->name ( '
 Route::get ( '/peminjaman/create', [ PeminjamanController::class, 'create' ] )->name ( 'peminjaman.create' );
 Route::post ( '/peminjaman', [ PeminjamanController::class, 'store' ] )->name ( 'peminjaman.store' );
 
+Route::get ( '/pengembalian', [ PengembalianController::class, 'index' ] )->name ( 'pengembalian.index' );
+Route::post ( '/pengembalian', [ PengembalianController::class, 'store' ] )->name ( 'pengembalian.store' );
 
 require __DIR__ . '/auth.php';

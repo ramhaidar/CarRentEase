@@ -26,8 +26,8 @@
                                         <td class="px-4 py-2">{{ $peminjaman->mobil->merek }}</td>
                                         <td class="px-4 py-2">{{ $peminjaman->mobil->model }}</td>
                                         <td class="px-4 py-2">{{ $peminjaman->mobil->nomor_plat }}</td>
-                                        <td class="px-4 py-2">{{ $peminjaman->tanggal_mulai }}</td>
-                                        <td class="px-4 py-2">{{ $peminjaman->tanggal_selesai }}</td>
+                                        <td class="px-4 py-2">{{ $peminjaman->tanggal_mulai->format('Y-m-d') }}</td>
+                                        <td class="px-4 py-2">{{ $peminjaman->tanggal_selesai->format('Y-m-d') }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -40,8 +40,8 @@
             </div>
         </div>
     </div>
-    @if (session('success'))
-        <script type="module">
+    <script type="module">
+        @if (session('success'))
             Swal.fire({
                 icon: 'success',
                 title: 'Sukses',
@@ -49,6 +49,26 @@
                 timer: 2000,
                 showConfirmButton: false
             });
-        </script>
-    @endif
+        @endif
+
+        @if (session('error'))
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: '{{ session('error') }}',
+                timer: 2000,
+                showConfirmButton: false
+            });
+        @endif
+
+        @if (session('deleted'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil Dihapus',
+                text: '{{ session('deleted') }}',
+                timer: 2000,
+                showConfirmButton: false
+            });
+        @endif
+    </script>
 </x-app-layout>
