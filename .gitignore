@@ -1,7 +1,14 @@
-/vendor/
-node_modules/
-npm-debug.log
-yarn-error.log
+# Node dependencies
+/node_modules
+/npm-debug.log
+/yarn-error.log
+
+# Laravel & Lumen specific
+/vendor
+/public/build
+/public/hot
+/public/storage
+/storage/*.key
 
 # Laravel 4 specific
 bootstrap/compiled.php
@@ -15,9 +22,41 @@ public/hot
 public_html/storage
 public_html/hot
 
-storage/*.key
+# Environment files
 .env
+.env.backup
+.env.production
+
+# PHPUnit and testing
+.phpunit.result.cache
+/.phpunit.cache
+
+# Homestead and Vagrant
 Homestead.yaml
 Homestead.json
 /.vagrant
-.phpunit.result.cache
+
+# IDE and Editor specific
+/.idea
+/.vscode
+/.fleet
+/.zed
+
+# PHP tools and configuration files
+.phpactor.json
+auth.json
+
+# Backup files
+/resources/views_backup
+/database/seeders_backup
+/database/migrations_backup
+/database/factories_backup
+/app/Models_Backup
+**/views_backup/
+**/seeders_backup/
+**/migrations_backup/
+**/factories_backup/
+**/Models_Backup/
+
+# Personal Folder
+/_dont_push
