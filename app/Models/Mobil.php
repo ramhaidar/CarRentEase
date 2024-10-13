@@ -16,7 +16,6 @@ class Mobil extends Model
         'model',
         'nomor_plat',
         'tarif_sewa_per_hari',
-        'tersedia',
     ];
 
     public function peminjamans ()

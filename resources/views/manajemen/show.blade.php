@@ -11,9 +11,12 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <h3 class="text-lg font-semibold">{{ $mobil->merek }} {{ $mobil->model }}</h3>
                     <p>{{ __('Nomor Plat: ') }} {{ $mobil->nomor_plat }}</p>
-                    <p>{{ __('Tarif Sewa per Hari: ') }} {{ number_format($mobil->tarif_sewa_per_hari, 2) }}</p>
-                    <p>{{ __('Ketersediaan: ') }}
-                        @if ($mobil->tersedia)
+                    <p>{{ __('Tarif Sewa per Hari: ') }} Rp{{ number_format($mobil->tarif_sewa_per_hari, 0, ',', '.') }}</p>
+                    <p>{{ __('Ketersediaan (Hari Ini): ') }}
+                        @php
+                            $isAvailable = !$mobil->peminjamans()->where('tanggal_mulai', '<=', now())->where('tanggal_selesai', '>=', now())->where('status_pengembalian', false)->exists();
+                        @endphp
+                        @if ($isAvailable)
                             <span class="text-green-600">{{ __('Tersedia') }}</span>
                         @else
                             <span class="text-red-600">{{ __('Tidak Tersedia') }}</span>

@@ -41,17 +41,15 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited ();
 
-        // Ambil input login dan tentukan apakah itu email atau username
         $login     = $this->input ( 'login' );
         $fieldType = filter_var ( $login, FILTER_VALIDATE_EMAIL ) ? 'email' : 'username';
 
-        // Gunakan 'attempt' untuk mencocokkan password dan email/username
         if ( ! Auth::attempt ( [ $fieldType => $login, 'password' => $this->input ( 'password' ) ], $this->boolean ( 'remember' ) ) )
         {
             RateLimiter::hit ( $this->throttleKey () );
 
             throw ValidationException::withMessages ( [ 
-                'login' => trans ( 'auth.failed' ), // Mengubah pesan error untuk 'login'
+                'login' => trans ( 'auth.failed' ),
             ] );
         }
 

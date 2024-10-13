@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId ( 'peminjaman_id' )->constrained ( 'peminjamans' )->onDelete ( 'cascade' );
             $table->date ( 'tanggal_pengembalian' );
             $table->integer ( 'jumlah_hari' );
-            $table->decimal ( 'total_biaya', 10, 2 );
+            $table->integer ( 'total_biaya' );
             $table->timestamps ();
         } );
     }

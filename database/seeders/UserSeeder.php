@@ -29,9 +29,31 @@ class UserSeeder extends Seeder
         // ] );
 
         User::create ( [ 
-            'name'          => 'User',
-            'username'      => 'user',
-            'email'         => 'user@gmail.com',
+            'name'          => 'User1',
+            'username'      => 'user1',
+            'email'         => 'user1@gmail.com',
+            'password'      => Hash::make ( 'user1234' ),
+            'alamat'        => $faker->address,
+            'nomor_telepon' => '+62' . $faker->numerify ( '###########' ),
+            'nomor_sim'     => $faker->numerify ( '##########' ),
+            'role'          => 'user',
+        ] );
+
+        User::create ( [ 
+            'name'          => 'User2',
+            'username'      => 'user2',
+            'email'         => 'user2@gmail.com',
+            'password'      => Hash::make ( 'user1234' ),
+            'alamat'        => $faker->address,
+            'nomor_telepon' => '+62' . $faker->numerify ( '###########' ),
+            'nomor_sim'     => $faker->numerify ( '##########' ),
+            'role'          => 'user',
+        ] );
+
+        User::create ( [ 
+            'name'          => 'User3',
+            'username'      => 'user3',
+            'email'         => 'user3@gmail.com',
             'password'      => Hash::make ( 'user1234' ),
             'alamat'        => $faker->address,
             'nomor_telepon' => '+62' . $faker->numerify ( '###########' ),

@@ -13,4 +13,7 @@ import Swal from 'sweetalert2';
 window.Swal = Swal;
 
 import flatpickr from "flatpickr";
-import "flatpickr/dist/flatpickr.css"; // Import CSS jika diperlukan
+import "flatpickr/dist/flatpickr.css";
+
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import '@fortawesome/fontawesome-free/js/all.js';

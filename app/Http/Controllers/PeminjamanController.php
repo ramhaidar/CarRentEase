@@ -11,20 +11,40 @@ class PeminjamanController extends Controller
 {
     public function index ()
     {
-        $peminjamans     = Peminjaman::where ( 'user_id', Auth::id () )->where ( 'status_pengembalian', false )->with ( 'mobil' )->get ();
-        $mobils_tersedia = Mobil::whereDoesntHave ( 'peminjamans', function ($query)
-        {
-            $query->where ( 'status_pengembalian', false );
-        } )->where ( 'tersedia', true )->get ();
-        return view ( 'peminjaman.peminjaman', compact ( 'peminjamans', 'mobils_tersedia' ) );
+        $peminjamans = Peminjaman::where ( 'user_id', Auth::id () )
+            ->where ( 'status_pengembalian', false )
+            ->with ( 'mobil' )
+            ->get ();
+
+        return view ( 'peminjaman.peminjaman', compact ( 'peminjamans' ) );
     }
 
-    public function create ()
+    public function create ( Request $request )
     {
-        $mobils = Mobil::whereDoesntHave ( 'peminjamans', function ($query)
+        if ( ! $request->filled ( 'tanggal_mulai' ) || ! $request->filled ( 'tanggal_selesai' ) )
         {
-            $query->where ( 'status_pengembalian', false );
-        } )->where ( 'tersedia', true )->get ();
+            return view ( 'peminjaman.create', [ 'mobils' => collect () ] );
+        }
+
+        $request->validate ( [ 
+            'tanggal_mulai'   => 'required|date|after_or_equal:today',
+            'tanggal_selesai' => 'required|date|after:tanggal_mulai',
+        ] );
+
+        $mobils = Mobil::whereDoesntHave ( 'peminjamans', function ($query) use ($request)
+        {
+            $query->where ( function ($q) use ($request)
+            {
+                $q->whereBetween ( 'tanggal_mulai', [ $request->tanggal_mulai, $request->tanggal_selesai ] )
+                    ->orWhereBetween ( 'tanggal_selesai', [ $request->tanggal_mulai, $request->tanggal_selesai ] )
+                    ->orWhere ( function ($q) use ($request)
+                    {
+                        $q->where ( 'tanggal_mulai', '<=', $request->tanggal_mulai )
+                            ->where ( 'tanggal_selesai', '>=', $request->tanggal_selesai );
+                    } );
+            } )->where ( 'status_pengembalian', false );
+        } )->get ();
+
         return view ( 'peminjaman.create', compact ( 'mobils' ) );
     }
 
@@ -33,26 +53,37 @@ class PeminjamanController extends Controller
         $request->validate ( [ 
             'mobil_id'        => 'required|exists:mobils,id',
             'tanggal_mulai'   => 'required|date|after_or_equal:today',
-            'tanggal_selesai' => 'required|date|after:tanggal_mulai'
+            'tanggal_selesai' => 'required|date|after:tanggal_mulai',
         ] );
 
         $mobil = Mobil::findOrFail ( $request->mobil_id );
 
-        if ( $mobil->tersedia )
+        $isAvailable = ! Peminjaman::where ( 'mobil_id', $mobil->id )
+            ->where ( 'status_pengembalian', false )
+            ->where ( function ($query) use ($request)
+            {
+                $query->whereBetween ( 'tanggal_mulai', [ $request->tanggal_mulai, $request->tanggal_selesai ] )
+                    ->orWhereBetween ( 'tanggal_selesai', [ $request->tanggal_mulai, $request->tanggal_selesai ] )
+                    ->orWhere ( function ($q) use ($request)
+                    {
+                        $q->where ( 'tanggal_mulai', '<=', $request->tanggal_mulai )
+                            ->where ( 'tanggal_selesai', '>=', $request->tanggal_selesai );
+                    } );
+            } )->exists ();
+
+        if ( $isAvailable )
         {
             Peminjaman::create ( [ 
                 'user_id'             => Auth::id (),
                 'mobil_id'            => $mobil->id,
                 'tanggal_mulai'       => $request->tanggal_mulai,
                 'tanggal_selesai'     => $request->tanggal_selesai,
-                'status_pengembalian' => false
+                'status_pengembalian' => false,
             ] );
-
-            $mobil->update ( [ 'tersedia' => false ] );
 
             return redirect ()->route ( 'peminjaman.index' )->with ( 'success', 'Mobil berhasil dipesan' );
         }
 
-        return redirect ()->back ()->with ( 'error', 'Mobil tidak tersedia untuk disewa' );
+        return redirect ()->back ()->with ( 'error', 'Mobil tidak tersedia untuk disewa pada tanggal yang dipilih' );
     }
 }

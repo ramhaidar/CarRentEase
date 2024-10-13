@@ -2,75 +2,54 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ManajemenController;
-use App\Http\Controllers\PeminjamanController;
-use App\Http\Controllers\PengembalianController;
+use App\Http\Controllers\{
+    ProfileController,
+    ManajemenController,
+    PeminjamanController,
+    PengembalianController
+};
 
-Route::get ( '/', function ()
-{
-    return redirect ()->route ( 'login' );
-} );
+Route::get ( '/', fn () => redirect ()->route ( 'login' ) );
 
 Route::get ( '/dashboard', function ()
 {
-    $user = Auth::user ();
-
-    // IF USER IS AUTHENTICATED THEN RETURN VIEW DASHBOARD
-    if ( $user )
-    {
-        return view ( 'dashboards.dashboard' );
-    }
-
-    // if ( $user->isAdmin () )
-    // {
-    //     return view ( 'dashboards.admin.dashboard' );
-    // }
-    // elseif ( $user->isUser () )
-    // {
-    //     return view ( 'dashboards.user.dashboard' );
-    // }
-
-    // abort ( 403, 'Unauthorized' );
-    return redirect ()->route ( 'login' );
+    return Auth::check () ? view ( 'dashboards.dashboard' ) : redirect ()->route ( 'login' );
 } )->middleware ( [ 'auth', 'verified' ] )->name ( 'dashboard' );
-
 
 Route::middleware ( 'auth' )->group ( function ()
 {
-    Route::get ( '/profile', [ ProfileController::class, 'edit' ] )->name ( 'profile.edit' );
-    Route::patch ( '/profile', [ ProfileController::class, 'update' ] )->name ( 'profile.update' );
-    Route::delete ( '/profile', [ ProfileController::class, 'destroy' ] )->name ( 'profile.destroy' );
+
+    Route::prefix ( 'profile' )->group ( function ()
+    {
+        Route::get ( '/', [ ProfileController::class, 'edit' ] )->name ( 'profile.edit' );
+        Route::patch ( '/', [ ProfileController::class, 'update' ] )->name ( 'profile.update' );
+        Route::delete ( '/', [ ProfileController::class, 'destroy' ] )->name ( 'profile.destroy' );
+    } );
+
+    Route::prefix ( 'manajemen' )->group ( function ()
+    {
+        Route::get ( '/', [ ManajemenController::class, 'index' ] )->name ( 'manajemen.index' );
+        Route::get ( '/create', [ ManajemenController::class, 'create' ] )->name ( 'manajemen.create' );
+        Route::post ( '/', [ ManajemenController::class, 'store' ] )->name ( 'manajemen.store' );
+        Route::get ( '/{id}/edit', [ ManajemenController::class, 'edit' ] )->name ( 'manajemen.edit' );
+        Route::put ( '/{id}', [ ManajemenController::class, 'update' ] )->name ( 'manajemen.update' );
+        Route::delete ( '/{id}', [ ManajemenController::class, 'destroy' ] )->name ( 'manajemen.destroy' );
+        Route::get ( '/{id}', [ ManajemenController::class, 'show' ] )->name ( 'manajemen.show' );
+    } );
+
+    Route::prefix ( 'peminjaman' )->group ( function ()
+    {
+        Route::get ( '/', [ PeminjamanController::class, 'index' ] )->name ( 'peminjaman.index' );
+        Route::get ( '/create', [ PeminjamanController::class, 'create' ] )->name ( 'peminjaman.create' );
+        Route::post ( '/', [ PeminjamanController::class, 'store' ] )->name ( 'peminjaman.store' );
+    } );
+
+    Route::prefix ( 'pengembalian' )->group ( function ()
+    {
+        Route::get ( '/', [ PengembalianController::class, 'index' ] )->name ( 'pengembalian.index' );
+        Route::post ( '/', [ PengembalianController::class, 'store' ] )->name ( 'pengembalian.store' );
+    } );
+
 } );
-
-// Route::middleware ( [ 'role:admin' ] )->group ( function ()
-// {
-//     Route::get ( '/admin/dashboard', [ AdminController::class, 'index' ] )->name ( 'admin.dashboard' );
-// } );
-
-// Route::middleware ( [ 'role:user' ] )->group ( function ()
-// {
-//     Route::get ( '/user/dashboard', [ UserController::class, 'index' ] )->name ( 'user.dashboard' );
-// } );
-
-Route::get ( '/manajemen', [ ManajemenController::class, 'index' ] )->name ( 'manajemen.index' );
-Route::get ( '/peminjaman', [ PeminjamanController::class, 'index' ] )->name ( 'peminjaman.index' );
-Route::get ( '/pengembalian', [ PengembalianController::class, 'index' ] )->name ( 'pengembalian.index' );
-
-Route::get ( '/manajemen', [ ManajemenController::class, 'index' ] )->name ( 'manajemen.index' ); // Route untuk menampilkan daftar mobil
-Route::get ( '/manajemen/create', [ ManajemenController::class, 'create' ] )->name ( 'manajemen.create' ); // Route untuk form tambah mobil
-Route::post ( '/manajemen', [ ManajemenController::class, 'store' ] )->name ( 'manajemen.store' ); // Route untuk menyimpan mobil baru
-
-Route::get ( '/manajemen/{id}/edit', [ ManajemenController::class, 'edit' ] )->name ( 'manajemen.edit' );
-Route::put ( '/manajemen/{id}', [ ManajemenController::class, 'update' ] )->name ( 'manajemen.update' );
-Route::delete ( '/manajemen/{id}', [ ManajemenController::class, 'destroy' ] )->name ( 'manajemen.destroy' );
-Route::get ( '/manajemen/{id}', [ ManajemenController::class, 'show' ] )->name ( 'manajemen.show' );
-
-Route::get ( '/peminjaman', [ PeminjamanController::class, 'index' ] )->name ( 'peminjaman.index' );
-Route::get ( '/peminjaman/create', [ PeminjamanController::class, 'create' ] )->name ( 'peminjaman.create' );
-Route::post ( '/peminjaman', [ PeminjamanController::class, 'store' ] )->name ( 'peminjaman.store' );
-
-Route::get ( '/pengembalian', [ PengembalianController::class, 'index' ] )->name ( 'pengembalian.index' );
-Route::post ( '/pengembalian', [ PengembalianController::class, 'store' ] )->name ( 'pengembalian.store' );
 
 require __DIR__ . '/auth.php';

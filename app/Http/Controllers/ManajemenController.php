@@ -11,6 +11,16 @@ class ManajemenController extends Controller
     {
         $query = Mobil::query ();
 
+        if ( $request->has ( 'only_available_today' ) && $request->only_available_today == 1 )
+        {
+            $query->whereDoesntHave ( 'peminjamans', function ($subQuery)
+            {
+                $subQuery->where ( 'tanggal_mulai', '<=', now () )
+                    ->where ( 'tanggal_selesai', '>=', now () )
+                    ->where ( 'status_pengembalian', false );
+            } );
+        }
+
         if ( $request->filled ( 'merek' ) )
         {
             $query->where ( 'merek', 'like', '%' . $request->merek . '%' );
@@ -19,11 +29,6 @@ class ManajemenController extends Controller
         if ( $request->filled ( 'model' ) )
         {
             $query->where ( 'model', 'like', '%' . $request->model . '%' );
-        }
-
-        if ( $request->filled ( 'tersedia' ) )
-        {
-            $query->where ( 'tersedia', $request->tersedia );
         }
 
         $mobils = $query->get ();
@@ -87,7 +92,6 @@ class ManajemenController extends Controller
         $mobil = Mobil::findOrFail ( $id );
         $mobil->delete ();
 
-        // return redirect ()->route ( 'manajemen.index' )->with ( 'success', 'Mobil berhasil dihapus' );
         return redirect ()->route ( 'manajemen.index' )->with ( 'deleted', 'Mobil berhasil dihapus' );
     }
 

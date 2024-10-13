@@ -17,8 +17,7 @@ return new class extends Migration
             $table->string ( 'merek' );
             $table->string ( 'model' );
             $table->string ( 'nomor_plat' )->unique ();
-            $table->decimal ( 'tarif_sewa_per_hari', 8, 2 );
-            $table->boolean ( 'tersedia' )->default ( true );
+            $table->integer ( 'tarif_sewa_per_hari' );
             $table->timestamps ();
         } );
     }

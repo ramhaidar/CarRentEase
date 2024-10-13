@@ -12,7 +12,12 @@ class PengembalianController extends Controller
 {
     public function index ()
     {
-        return view ( 'pengembalian.pengembalian' );
+        $pengembalians = Pengembalian::whereHas ( 'peminjaman', function ($query)
+        {
+            $query->where ( 'user_id', Auth::id () );
+        } )->with ( 'peminjaman.mobil' )->get ();
+
+        return view ( 'pengembalian.pengembalian', compact ( 'pengembalians' ) );
     }
 
     public function store ( Request $request )
@@ -25,7 +30,6 @@ class PengembalianController extends Controller
 
         if ( ! $mobil )
         {
-            // dd ( "TEST" );
             return redirect ()->route ( 'pengembalian.index' )->with ( 'error', 'Nomor plat tidak ditemukan.' );
         }
 

@@ -61,3 +61,4 @@ auth.json
 # Personal Folder
 /_dont_push
 resources/views/test.blade.php
+resources/views/welcome.blade.php

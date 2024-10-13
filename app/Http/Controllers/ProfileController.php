@@ -29,15 +29,8 @@ class ProfileController extends Controller
     {
         $user = Auth::user ();
 
-        // Validasi untuk memastikan email, username, dan nomor SIM unik, tetapi mengabaikan data user saat ini
         $request->validate ( [ 
             'name'          => 'required|string|max:255',
-            // 'username'      => [ 
-            //     'required',
-            //     'string',
-            //     'max:255',
-            //     Rule::unique ( 'users', 'username' )->ignore ( $user->id ), // Mengabaikan username milik user saat ini
-            // ],
             'email'         => [ 
                 'required',
                 'string',
@@ -55,17 +48,14 @@ class ProfileController extends Controller
             ],
         ] );
 
-        // Update data pengguna di database
         $user->update ( [ 
             'name'          => $request->name,
-            // 'username'      => $request->username,
             'email'         => $request->email,
             'alamat'        => $request->alamat,
             'nomor_telepon' => $request->nomor_telepon,
             'nomor_sim'     => $request->nomor_sim,
         ] );
 
-        // Redirect kembali ke halaman profil dengan notifikasi sukses
         return Redirect::route ( 'profile.edit' )
             ->with ( 'status', 'profile-updated' )
             ->with ( 'success', 'Profil berhasil diperbarui' );

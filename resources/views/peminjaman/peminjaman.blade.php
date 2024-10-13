@@ -7,7 +7,7 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <div class="flex justify-between mb-6">
-                        <h3 class="text-lg font-semibold">{{ __('Mobil Sedang Dipinjam') }}</h3><a class="px-4 py-2 bg-green-500 text-white font-semibold rounded-md hover:bg-green-600" href="{{ route('peminjaman.create') }}">{{ __('Pinjam Mobil') }}</a>
+                        <h3 class="text-lg font-semibold">{{ __('Mobil Sedang Dipinjam') }}</h3><a class="px-4 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600" href="{{ route('peminjaman.create') }}">{{ __('Pinjam Mobil') }}</a>
                     </div>
                     <div class="overflow-x-auto mt-6">
                         <table class="w-full table-auto bg-white dark:bg-gray-800">
@@ -18,6 +18,7 @@
                                     <th class="px-4 py-2">{{ __('Nomor Plat') }}</th>
                                     <th class="px-4 py-2">{{ __('Tanggal Mulai') }}</th>
                                     <th class="px-4 py-2">{{ __('Tanggal Selesai') }}</th>
+                                    <th class="px-4 py-2">{{ __('Total Biaya') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -28,6 +29,7 @@
                                         <td class="px-4 py-2">{{ $peminjaman->mobil->nomor_plat }}</td>
                                         <td class="px-4 py-2">{{ $peminjaman->tanggal_mulai->format('Y-m-d') }}</td>
                                         <td class="px-4 py-2">{{ $peminjaman->tanggal_selesai->format('Y-m-d') }}</td>
+                                        <td class="px-4 py-2">Rp{{ number_format($peminjaman->mobil->tarif_sewa_per_hari * $peminjaman->tanggal_mulai->diffInDays($peminjaman->tanggal_selesai), 0, ',', '.') }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>

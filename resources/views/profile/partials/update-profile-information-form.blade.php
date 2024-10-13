@@ -17,14 +17,12 @@
         @csrf
         @method('patch')
 
-        <!-- Name -->
         <div>
             <x-input-label for="name" :value="__('Name')" />
             <x-text-input class="mt-1 block w-full" id="name" name="name" type="text" :value="old('name', Auth::user()->name)" required autofocus autocomplete="name" />
             <x-input-error class="mt-2" :messages="$errors->get('name')" />
         </div>
 
-        <!-- Email -->
         <div>
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input class="mt-1 block w-full" id="email" name="email" type="email" :value="old('email', Auth::user()->email)" required autocomplete="username" />
@@ -49,21 +47,18 @@
             @endif
         </div>
 
-        <!-- Alamat -->
         <div>
             <x-input-label for="alamat" :value="__('Alamat')" />
             <x-text-input class="mt-1 block w-full" id="alamat" name="alamat" type="text" :value="old('alamat', Auth::user()->alamat)" required />
             <x-input-error class="mt-2" :messages="$errors->get('alamat')" />
         </div>
 
-        <!-- Nomor Telepon -->
         <div>
             <x-input-label for="nomor_telepon" :value="__('Nomor Telepon')" />
             <x-text-input class="mt-1 block w-full" id="nomor_telepon" name="nomor_telepon" type="text" :value="old('nomor_telepon', Auth::user()->nomor_telepon)" required />
             <x-input-error class="mt-2" :messages="$errors->get('nomor_telepon')" />
         </div>
 
-        <!-- Nomor SIM -->
         <div>
             <x-input-label for="nomor_sim" :value="__('Nomor SIM')" />
             <x-text-input class="mt-1 block w-full" id="nomor_sim" name="nomor_sim" type="text" :value="old('nomor_sim', Auth::user()->nomor_sim)" required />
