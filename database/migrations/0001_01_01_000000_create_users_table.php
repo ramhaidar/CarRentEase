@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string ( 'nomor_sim' )->unique ();
             $table->string ( 'role' )->default ( 'user' );
             $table->string ( 'remember_token', 100 )->nullable ();
+            $table->timestamp ( 'email_verified_at' )->nullable ();
             $table->timestamps ();
         } );
 

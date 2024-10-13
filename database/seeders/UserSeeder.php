@@ -15,16 +15,16 @@ class UserSeeder extends Seeder
      */
     public function run () : void
     {
-        $faker = Faker::create ( 'id_ID' ); // Menggunakan locale Indonesia
+        $faker = Faker::create ( 'id_ID' );
 
         // User::create ( [ 
         //     'name'          => 'Admin',
         //     'username'      => 'admin',
         //     'email'         => 'admin@gmail.com',
         //     'password'      => Hash::make ( 'admin1234' ),
-        //     'alamat'        => $faker->address, // Menggunakan Faker untuk alamat
-        //     'nomor_telepon' => $faker->phoneNumber, // Menggunakan Faker untuk nomor telepon
-        //     'nomor_sim'     => $faker->numerify ( '##########' ), // Menggunakan Faker untuk nomor SIM (angka acak)
+        //     'alamat'        => $faker->address, 
+        //     'nomor_telepon' => '+62' . $faker->numerify ( '###########' ),
+        //     'nomor_sim'     => $faker->numerify ( '##########' ),
         //     'role'          => 'admin',
         // ] );
 
@@ -33,9 +33,9 @@ class UserSeeder extends Seeder
             'username'      => 'user',
             'email'         => 'user@gmail.com',
             'password'      => Hash::make ( 'user1234' ),
-            'alamat'        => $faker->address, // Menggunakan Faker untuk alamat
-            'nomor_telepon' => $faker->phoneNumber, // Menggunakan Faker untuk nomor telepon
-            'nomor_sim'     => $faker->numerify ( '##########' ), // Menggunakan Faker untuk nomor SIM (angka acak)
+            'alamat'        => $faker->address,
+            'nomor_telepon' => '+62' . $faker->numerify ( '###########' ),
+            'nomor_sim'     => $faker->numerify ( '##########' ),
             'role'          => 'user',
         ] );
     }

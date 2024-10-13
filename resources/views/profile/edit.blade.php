@@ -26,4 +26,36 @@
             </div>
         </div>
     </div>
+
+    <script type="module">
+        @if (session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Sukses',
+                text: '{{ session('success') }}',
+                timer: 2000,
+                showConfirmButton: false
+            });
+        @endif
+
+        @if (session('error'))
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: '{{ session('error') }}',
+                timer: 2000,
+                showConfirmButton: false
+            });
+        @endif
+
+        @if (session('deleted'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil Dihapus',
+                text: '{{ session('deleted') }}',
+                timer: 2000,
+                showConfirmButton: false
+            });
+        @endif
+    </script>
 </x-app-layout>

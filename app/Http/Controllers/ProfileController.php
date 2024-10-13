@@ -2,59 +2,93 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfileUpdateRequest;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Redirect;
+use App\Http\Requests\ProfileUpdateRequest;
 
 class ProfileController extends Controller
 {
     /**
      * Display the user's profile form.
      */
-    public function edit(Request $request): View
+    public function edit ( Request $request ) : View
     {
-        return view('profile.edit', [
-            'user' => $request->user(),
-        ]);
+        return view ( 'profile.edit', [ 
+            'user' => $request->user (),
+        ] );
     }
 
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update ( Request $request )
     {
-        $request->user()->fill($request->validated());
+        $user = Auth::user ();
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
-        }
+        // Validasi untuk memastikan email, username, dan nomor SIM unik, tetapi mengabaikan data user saat ini
+        $request->validate ( [ 
+            'name'          => 'required|string|max:255',
+            // 'username'      => [ 
+            //     'required',
+            //     'string',
+            //     'max:255',
+            //     Rule::unique ( 'users', 'username' )->ignore ( $user->id ), // Mengabaikan username milik user saat ini
+            // ],
+            'email'         => [ 
+                'required',
+                'string',
+                'email',
+                'max:255',
+                Rule::unique ( 'users', 'email' )->ignore ( $user->id ), // Mengabaikan email milik user saat ini
+            ],
+            'alamat'        => 'required|string|max:255',
+            'nomor_telepon' => 'required|string|max:15',
+            'nomor_sim'     => [ 
+                'required',
+                'string',
+                'max:20',
+                Rule::unique ( 'users', 'nomor_sim' )->ignore ( $user->id ), // Mengabaikan nomor SIM milik user saat ini
+            ],
+        ] );
 
-        $request->user()->save();
+        // Update data pengguna di database
+        $user->update ( [ 
+            'name'          => $request->name,
+            // 'username'      => $request->username,
+            'email'         => $request->email,
+            'alamat'        => $request->alamat,
+            'nomor_telepon' => $request->nomor_telepon,
+            'nomor_sim'     => $request->nomor_sim,
+        ] );
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        // Redirect kembali ke halaman profil dengan notifikasi sukses
+        return Redirect::route ( 'profile.edit' )
+            ->with ( 'status', 'profile-updated' )
+            ->with ( 'success', 'Profil berhasil diperbarui' );
     }
 
     /**
      * Delete the user's account.
      */
-    public function destroy(Request $request): RedirectResponse
+    public function destroy ( Request $request ) : RedirectResponse
     {
-        $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current_password'],
-        ]);
+        $request->validateWithBag ( 'userDeletion', [ 
+            'password' => [ 'required', 'current_password' ],
+        ] );
 
-        $user = $request->user();
+        $user = $request->user ();
 
-        Auth::logout();
+        Auth::logout ();
 
-        $user->delete();
+        $user->delete ();
 
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+        $request->session ()->invalidate ();
+        $request->session ()->regenerateToken ();
 
-        return Redirect::to('/');
+        return Redirect::to ( '/' )->with ( 'success', 'Profil berhasil dihapus' );
     }
 }
