@@ -7,17 +7,47 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+## Tugas: Pembuatan Aplikasi Persewaan Mobil
+
+Deskripsi: Anda diminta untuk membuat sebuah aplikasi persewaan mobil menggunakan bahasa pemrograman sesuai deskripsi lowongan yang Anda pilih. Aplikasi ini akan memungkinkan pengguna untuk melakukan beberapa tugas dasar dalam manajemen persewaan mobil.
+
+Fitur Aplikasi:
+
+1. Registrasi Pengguna:
+    - Pengguna dapat mendaftar dengan mengisi informasi pribadi seperti nama, alamat, nomor telepon, dan nomor SIM. [✔]
+    - Informasi pengguna harus disimpan dan dapat diakses kembali. [✔]
+2. Manajemen Mobil:
+    - Pengguna dapat menambahkan mobil baru ke dalam sistem dengan mengisi detail mobil seperti merek, model, nomor plat, dan tarif sewa per hari. [✔]
+    - Data mobil yang ditambahkan harus disimpan dalam sistem dan dapat diakses kembali. [✔]
+    - Pengguna dapat mencari mobil berdasarkan merek, model, atau ketersediaan. [✔]
+    - Pengguna dapat melihat daftar semua mobil yang tersedia untuk disewa. [✔]
+3. Peminjaman Mobil:
+    - Pengguna dapat memesan mobil dengan memasukkan tanggal mulai dan tanggal selesai penyewaan, serta memilih mobil yang tersedia. [✔]
+    - Sistem harus memverifikasi ketersediaan mobil pada tanggal yang diminta. [✔]
+    - Data peminjaman harus disimpan dan dapat diakses kembali. [✔]
+    - Pengguna dapat melihat daftar mobil yang sedang mereka sewa. [✔]
+4. Pengembalian Mobil:
+    - Pengguna dapat mengembalikan mobil yang telah mereka sewa dengan memasukkan nomor plat mobil. [✔]
+    - Sistem harus memverifikasi bahwa mobil tersebut benar-benar disewa oleh pengguna tersebut dan menghitung jumlah hari penyewaan. [✔]
+    - Data pengembalian harus disimpan dan dapat diakses kembali. [✔]
+    - Sistem harus menghitung jumlah biaya sewa berdasarkan tarif harian dan durasi sewa. [✔]
+5. Keluar Aplikasi:
+    - Pengguna dapat keluar dari aplikasi & login lagi di lain waktu [✔]
+
+Petunjuk Pengerjaan: Pastikan Anda menggunakan konsep pemrograman yang relevan, seperti pemrosesan data, penggunaan struktur data, dan fungsi. Aplikasi harus memiliki antarmuka pengguna yang intuitif. Gunakan manajemen kesalahan untuk menangani situasi seperti mobil yang tidak tersedia atau pengguna yang tidak terdaftar. Anda dapat menyimpan data pengguna, mobil, peminjaman, dan pengembalian dalam file teks atau menggunakan database sederhana.
+Anda dapat menyesuaikan persyaratan dan spesifikasi tersebut sesuai dengan kemampuan dan kebutuhan Anda.
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+-   [Simple, fast routing engine](https://laravel.com/docs/routing).
+-   [Powerful dependency injection container](https://laravel.com/docs/container).
+-   Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
+-   Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
+-   Database agnostic [schema migrations](https://laravel.com/docs/migrations).
+-   [Robust background job processing](https://laravel.com/docs/queues).
+-   [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
@@ -35,19 +65,19 @@ We would like to extend our thanks to the following sponsors for funding Laravel
 
 ### Premium Partners
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+-   **[Vehikl](https://vehikl.com/)**
+-   **[Tighten Co.](https://tighten.co)**
+-   **[WebReinvent](https://webreinvent.com/)**
+-   **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
+-   **[64 Robots](https://64robots.com)**
+-   **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
+-   **[Cyber-Duck](https://cyber-duck.co.uk)**
+-   **[DevSquad](https://devsquad.com/hire-laravel-developers)**
+-   **[Jump24](https://jump24.co.uk)**
+-   **[Redberry](https://redberry.international/laravel/)**
+-   **[Active Logic](https://activelogic.com)**
+-   **[byte5](https://byte5.de)**
+-   **[OP.GG](https://op.gg)**
 
 ## Contributing
 
