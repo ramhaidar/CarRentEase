@@ -6,21 +6,20 @@
         "build": "vite build"
     },
     "devDependencies": {
-        "@tailwindcss/forms": "^0.5.2",
-        "alpinejs": "^3.4.2",
-        "autoprefixer": "^10.4.2",
-        "axios": "^1.7.4",
+        "@tailwindcss/forms": "^0.5.11",
+        "alpinejs": "^3.15.8",
+        "autoprefixer": "^10.4.24",
+        "axios": "^1.13.4",
         "jquery": "^3.7.1",
-        "laravel-mix": "^6.0.49",
-        "laravel-vite-plugin": "^1.0",
-        "postcss": "^8.4.31",
-        "tailwindcss": "^3.1.0",
-        "vite": "^5.0"
+        "laravel-vite-plugin": "^1.3.0",
+        "postcss": "^8.5.6",
+        "tailwindcss": "^3.4.19",
+        "vite": "^6.0.11"
     },
     "dependencies": {
-        "@fortawesome/fontawesome-free": "^6.6.0",
+        "@fortawesome/fontawesome-free": "^6.7.2",
         "flatpickr": "^4.6.13",
-        "sweetalert2": "^11.6.13"
+        "sweetalert2": "^11.26.18"
     },
     "name": "carrentease",
     "version": "1.0.0",
@@ -31,5 +30,10 @@
     },
     "keywords": [],
     "author": "",
-    "license": "ISC"
+    "license": "ISC",
+    "pnpm": {
+        "overrides": {
+            "webpack-dev-server": "^5.2.1"
+        }
+    }
 }
